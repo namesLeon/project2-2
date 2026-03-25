@@ -14,14 +14,17 @@
 1. Launch Google Chrome
 2. Click 3 dots on the top right
 3. Navigate through `Extensions` -> `Manage Extensions` 
-![alt text](image.png)
+![navigate](docs/media/navigate_extensions.png)
 4. Select `Load Unpacked` on the top left
 5. Navigate through `path/to/repo` and select the `chrome_extension` folder
 6. Your extension is now loaded and running
 
-### Demo
+### Backend Demo
 1. Navigate to an LLM website that is included in `manifest.json`'s permitted hosts.
     - [ChatGPT](https://www.chatgpt.com/)
     - [Claude](https://claude.ai/)
     - [Gemini](https://gemini.google.com)
     - [Perplexity](https://www.perplexity.ai/)
+2. Press `F12` to enable the Developer Tools
+3. Type any `PII` into a text-box and inspect the `console` on the top right.
+![console](docs/media/console_snippet.png)
