@@ -18,3 +18,10 @@
 4. Select `Load Unpacked` on the top left
 5. Navigate through `path/to/repo` and select the `chrome_extension` folder
 6. Your extension is now loaded and running
+
+### Demo
+1. Navigate to an LLM website that is included in `manifest.json`'s permitted hosts.
+    - [ChatGPT](https://www.chatgpt.com/)
+    - [Claude](https://claude.ai/)
+    - [Gemini](https://gemini.google.com)
+    - [Perplexity](https://www.perplexity.ai/)
