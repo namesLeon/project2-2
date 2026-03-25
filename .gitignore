@@ -1,0 +1,21 @@
+
+*.log
+*.DS_Store
+
+# Environments
+.env
+.env.local
+
+# IDE specific - If u use anything other than vscode or IDEA, @ me and add it
+.vscode/
+.idea/
+
+
+# Builds
+build/
+*.zip
+
+# Python
+__pycache__/
+venv/
+.venv/

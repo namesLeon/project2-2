@@ -1,0 +1,24 @@
+{
+    "manifest_version": 3,
+    "name": "Group 14 - Insert very cool and awesome name here guys",
+    "version": "1.0.0",
+    "description": "Locally detects and protects personally identifiable information using pattern-recognition techniques and BERT",
+    "permissions": [
+        "storage",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://chatgpt.com/*",
+        "https://claude.ai/*"
+    ],
+    "background": {
+        "service_worker": "background/background.js"
+    },
+    "content_scripts": [
+    {
+        "matches": ["https://chatgpt.com/*", "https://claude.ai/*"],
+        "js": ["lib/detector.js"]
+    }
+    ]
+}
+
