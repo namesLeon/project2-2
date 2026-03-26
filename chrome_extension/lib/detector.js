@@ -6,7 +6,37 @@ const piiPatterns = {
 };
 
 const OVERLAY_ID = 'pii-detector-overlay';
+const INLINE_OVERLAY_CLASS = 'pii-inline-highlight';
 
+// -------------------- Inline Highlighting --------------------
+function highlightInlinePII(element, findings) {
+  if (!element || findings.length === 0) return;
+
+  // Prevent infinite loop
+  if (element.dataset.highlighting === 'true') return;
+  element.dataset.highlighting = 'true';
+
+  // Remove old highlights
+  element.querySelectorAll(`.${INLINE_OVERLAY_CLASS}`).forEach(span => {
+    span.replaceWith(span.textContent);
+  });
+
+  let html = element.innerHTML;
+
+  findings.forEach(({ value }) => {
+    const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'g');
+    html = html.replace(
+      regex,
+      `<span class="${INLINE_OVERLAY_CLASS}">${value}</span>`
+    );
+  });
+
+  element.innerHTML = html;
+  element.dataset.highlighting = 'false';
+}
+
+// -------------------- Sidebar Overlay --------------------
 function ensureOverlay() {
   let overlay = document.getElementById(OVERLAY_ID);
   if (overlay) return overlay;
@@ -85,6 +115,7 @@ function renderFindings(findings) {
   overlay.style.display = 'block';
 }
 
+// -------------------- PII Detection --------------------
 function detectPII(text) {
   const findings = [];
   for (const [type, regex] of Object.entries(piiPatterns)) {
@@ -101,15 +132,26 @@ function detectPII(text) {
   return findings;
 }
 
+// -------------------- Event Listener --------------------
 document.addEventListener('input', (e) => {
-  const text = e.target.value || e.target.textContent;
+  const target = e.target;
+
+  // Text from input / contenteditable
+  const text = target.value || target.textContent;
   if (!text) {
     renderFindings([]);
     return;
   }
-  
+
   const findings = detectPII(text);
+
+  // Render sidebar overlay
   renderFindings(findings);
+
+  // Inline highlighting (works for contenteditable only)
+  if (target.isContentEditable) {
+    highlightInlinePII(target, findings);
+  }
 
   if (findings.length > 0) {
     console.log('PII found:', findings);
