@@ -7,8 +7,8 @@
 2. Execute `.venv/scripts/Activate.ps1` to activate the virtual environment
 3. Execute `pip install -r requirements.txt` to install all required python libraries
 
-1. Run quantization script with `python chrome_extension/quantize.py`
-2. The quantized models will now appear under `models/`
+1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root
+2. The quantized models will now appear under `chrome_extension_models/`
 
 ### Extension setup 
 1. Launch Google Chrome
