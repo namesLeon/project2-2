@@ -10,7 +10,7 @@
 .idea/
 
 # Models
-models/
+**/models/
 
 # Builds
 build/
