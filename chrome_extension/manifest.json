@@ -2,35 +2,32 @@
     "manifest_version": 3,
     "name": "Group 14 - Privacy Project",
     "version": "1.0.0",
-    "description": "Locally detects and protects personally identifiable information using pattern-recognition techniques and BERT",
+    "description": "Locally detects and protects personally identifiable information using pattern-recognition techniques and NER",
     "host_permissions": [
         "https://chatgpt.com/*",
         "https://claude.ai/*",
         "https://www.perplexity.ai/*",
         "https://gemini.google.com/*"
     ],
-    "background": {
-        "service_worker": "background.js"
-    },
     "content_scripts": [
-    {
-        "matches": [
-            "https://chatgpt.com/*", 
-            "https://claude.ai/*",
-            "https://www.perplexity.ai/*",
-            "https://gemini.google.com/*"
-        ],
-        "js": [
-            "lib/detector.js",
-            "content/content.js",
-            "content/highlight.js",
-            "content/highlight.js"
-        ],
-        "css": [
-            "styles/highlight.css",
-            "styles/overlay.css"
-        ]
-    }
+        {
+            "matches": [
+                "https://chatgpt.com/*", 
+                "https://claude.ai/*",
+                "https://www.perplexity.ai/*",
+                "https://gemini.google.com/*"
+            ],
+            "js": [
+                "src/lib/detector.js",
+                "src/content/content.js",
+                "src/content/highlight.js",
+                "src/content/overlay.js"
+            ],
+            "css": [
+                "src/styles/highlight.css",
+                "src/styles/overlay.css"
+            ]
+        }
     ]
 }
 

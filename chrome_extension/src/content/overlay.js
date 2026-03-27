@@ -3,6 +3,9 @@ const OVERLAY_ID = 'pii-detector-overlay';
 function ensureOverlay() {
   let overlay = document.getElementById(OVERLAY_ID);
   if (overlay) return overlay;
+  
+  overlay = document.createElement('div');
+  overlay.id = OVERLAY_ID
 
   const title = document.createElement('div');
   title.textContent = 'Potential PII Found';

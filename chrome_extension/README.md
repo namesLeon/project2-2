@@ -7,7 +7,6 @@
 │  │  ├─ content.js
 │  │  ├─ highlight.js
 │  │  └─ overlay.js
-│  ├─ images
 │  ├─ lib
 │  │  └─ detector.js
 │  ├─ manifest.json
@@ -23,6 +22,8 @@
 ![highlight_demo](../docs/media/highlight_demo.png)
 - `overlay.js` handles the logic of the warning overlay when sensitive informatio is detected.
 ![overlay_demo](../docs/media/overlay_demo.png)
+- `styles/` contains all the `css` code for styling.
+- `manifest.js` is the configuration file instructing the browser how to load, run and display the extension.
 ## Useful development resources
 
 1. [HuggingFace](https://huggingface.co/)
