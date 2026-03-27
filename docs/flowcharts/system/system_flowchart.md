@@ -1,8 +1,6 @@
+```mermaid
 flowchart TD
-    A[User] -->|Input| B(LLM)
-    B --> C{Prompt verification AI}
-    C -->|PII Detected| D[Highlighted prompt]
-    C -->|PII Not detected| E[Prompt]
-    D -->|Click on Highlight| F[Suggestion for change]
-
-  
+    A[Download & Quantize Model] --> B[Save Model & Tokenizer]
+    B --> C[detectPII in Frontend]
+    D[User Input / Paste] --> C
+    C --> E[Highlight + Render Findings]

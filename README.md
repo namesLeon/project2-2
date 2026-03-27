@@ -13,20 +13,17 @@ This is a prototype of our endpoint data-loss-prevention (DLP) tool that automat
 ```
 group-14-cybersecurity
 ├─ chrome_extension # Main Chrome Extension 
-│  ├─ background.js
-│  ├─ content
-│  ├─ images
-│  ├─ lib
-│  ├─ manifest.json
+│  ├─ src/ # Extension's source code
+│  ├─ manifest.json # Extension's config
 │  ├─ quantize.py
-│  ├─ README.md
-├─ docs # Project's documentation
+│  ├─ README.md # Further code structure documentation
+├─ docs # Project's documentation files
 │  ├─ flowcharts
 │  ├─ media
-│  └─ README.md # docs 
-├─ LICENSE
+│  └─ README.md # docs/ Structure documentation
+├─ LICENSE # GPL Open Source License
 ├─ README.md
-└─ requirements.txt
+└─ requirements.txt # Python requirements
 ```
 
 ## PROTOTYPE INSTALLATION GUIDE
@@ -67,14 +64,13 @@ group-14-cybersecurity
 1. UI Mockup in `docs/ui`
 2. User interaction flowchart in `docs/flowcharts/user_interaction/`
 3. System's component interaction flowchart in `docs/flowcharts/system/`
-4. Proper documentation of project's structure
+4. Proper documentation of project's structure and goals
 
 ### Vertical Slice Goals
 1. Proper documentation of chosen approaches, such as:
     - Browser Extensions
     - Datasets
     - Quantization
-    - ONNX Runtime
     - NER models
     - Regex
 2. Functioning highlighting system.

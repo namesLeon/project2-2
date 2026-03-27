@@ -1,13 +1,7 @@
----
-config:
-  layout: fixed
----
-flowchart LR
-    A["Download model and tokenize"] --> B["Convert to ONNX Runtime"]
-    B --> C["Quantize the model"]
-    C --> D["Save model"] & E["Inference"]
-    E --> F["Tokenizer and Bert model"]
-    G@{ label: "Input prompt, e.g: 'My name is Alex'" } --> F
-    F --> H["PII detection output"]
-
-    G@{ shape: rect}
+```mermaid
+flowchart TD
+    A[User] -->|Input| B(LLM)
+    B --> C{Prompt verification AI}
+    C -->|PII Detected| D[Highlighted prompt]
+    C -->|PII Not detected| E[Prompt]
+    D -->|Click on Highlight| F[Suggestion for change]
