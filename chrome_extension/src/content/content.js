@@ -20,3 +20,13 @@ document.addEventListener('input', (e) => {
     console.log('PII found:', findings);
   }
 }, true);
+
+document.addEventListener('paste', (e) => {
+  setTimeout(() => {
+    const target = e.target;
+    const text = target.value || target.textContent;
+    const findings = detectPII(text);
+    if (target.isContentEditable) updateHighlight(target, findings);
+    renderFindings(findings);
+  }, 0);
+});
