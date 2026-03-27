@@ -3,6 +3,6 @@ flowchart TD
     B --> C{Prompt verification AI}
     C -->|PII Detected| D[Highlighted prompt]
     C -->|PII Not detected| E[Prompt]
-    D -->|Press Highlights| F[Suggestion for change]
+    D -->|Click on Highlight| F[Suggestion for change]
 
   

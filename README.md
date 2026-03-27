@@ -31,13 +31,13 @@ group-14-cybersecurity
 
 ## PROTOTYPE INSTALLATION GUIDE
 
-### Installation Guide
+### Quantized Model Installation Guide - Not integrated in prototype
 1. Run `python -m venv .venv` to create local virtual environment
 2. Execute `.venv/scripts/Activate.ps1` to activate the virtual environment
 3. Execute `pip install -r requirements.txt` to install all required python libraries
 
-1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root. !!! decide if needed before submission.
-2. The quantized models will now appear under `chrome_extension_models/`
+1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root.
+2. The quantized models will now appear under `chrome_extension_models/`.
 
 ### Extension setup 
 1. Launch Google Chrome
@@ -79,11 +79,17 @@ group-14-cybersecurity
     - Regex
 2. Functioning highlighting system.
 3. Functioning overlay system.
-4. Functioning sensitive data detection using regex + NER.
+4. Functioning sensitive data detection using regex.
+5. Auditable open-source code with GLP license.
 
 ### Future Goals
-1. Allow user to rephrase/redact text once prompted with a popup.
-2. Work on a Firefox extension to support more browsers.
-3. Further optimize NER implemntation to be less computationally expensive.
-4. Fine-tune NER model on privacy focused data to increase accuracy.
-5. UI adjustments to make it more user-friendly and less intrusive.
+1. Allow user to **rephrase/redact** text once prompted with a popup.
+2. Work on a **Firefox** extension to support more browsers.
+3. Integrate quantized **ONNX** model in `detector.js`.
+4. Further optimize **NER** implemntation to be less computationally expensive.
+5. Fine-tune **NER** model on privacy focused data to increase accuracy.
+6. UI adjustments to make it more aesthetically pleasing and robust across websites.
+7. Extend rule-based detection cases to cover a wider range of scenarios.
+8. Utilize a **debounce** timer to improve performance on larger text.
+9. Utilize `background.js` and `workers` to improve performance and perform expensive computations without slowing down the front end.
+10. Improve event handling, to handle pasted text, new lines, and deletions more gracefully.
