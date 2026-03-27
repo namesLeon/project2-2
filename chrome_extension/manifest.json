@@ -14,9 +14,22 @@
     },
     "content_scripts": [
     {
-        "matches": ["https://chatgpt.com/*", "https://claude.ai/*"],
-        "js": ["lib/detector.js"],
-        "css": ["styles/highlight.css"]
+        "matches": [
+            "https://chatgpt.com/*", 
+            "https://claude.ai/*",
+            "https://www.perplexity.ai/*",
+            "https://gemini.google.com/*"
+        ],
+        "js": [
+            "lib/detector.js",
+            "content/content.js",
+            "content/highlight.js",
+            "content/highlight.js"
+        ],
+        "css": [
+            "styles/highlight.css",
+            "styles/overlay.css"
+        ]
     }
     ]
 }
