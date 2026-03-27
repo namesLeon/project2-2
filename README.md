@@ -44,7 +44,7 @@ group-14-cybersecurity
 2. Click 3 dots on the top right
 3. Navigate through `Extensions` -> `Manage Extensions` 
 ![navigate](docs/media/navigate_extensions.png)
-4. Select `Load Unpacked` on the top left
+4. Turn on developer mode and select `Load Unpacked` on the top left
 5. Navigate through `path/to/repo` and select the `chrome_extension` folder
 6. Your extension is now loaded and running
 
