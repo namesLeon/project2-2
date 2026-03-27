@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "Group 14 - Insert very cool and awesome name here guys",
+    "name": "Group 14 - Privacy Project",
     "version": "1.0.0",
     "description": "Locally detects and protects personally identifiable information using pattern-recognition techniques and BERT",
     "host_permissions": [
