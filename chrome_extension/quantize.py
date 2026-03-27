@@ -15,8 +15,6 @@ Usage:
     python chrome_extension/quantize.py
 """
 
-## TODO ACTUALLY QUANTIZE
-
 from pathlib import Path
 from transformers import AutoTokenizer
 from optimum.onnxruntime import ORTModelForTokenClassification, ORTQuantizer

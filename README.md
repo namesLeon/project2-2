@@ -1,6 +1,6 @@
 # Group 14 - Cybersecurity
 
-## TEMPORARY PROTOTYPE INSTALLATION GUIDE
+## PROTOTYPE INSTALLATION GUIDE
 
 ### Installation Guide
 1. Run `python -m venv .venv` to create local virtual environment
@@ -28,3 +28,5 @@
 2. Press `F12` to enable the Developer Tools
 3. Type any `PII` into a text-box and inspect the `console` on the top right.
 ![console](docs/media/console_snippet.png)
+
+### Future Goals
