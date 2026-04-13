@@ -1,32 +1,36 @@
+let timeout; 
+
 document.addEventListener('input', (e) => {
-  const target = e.target;
-  if (!target) return;
+  clearTimeout(timeout);
 
-  const text = target.value || target.textContent;
-  if (!text) {
-    renderFindings([]);
-    return;
-  }
+  timeout = setTimeout(() => {
+    const target = e.target;
+    if (!target || !target.isContentEditable) return;
 
-  const findings = detectPII(text);
+    const text = target.innerText;
 
-  if (target.isContentEditable) {
+    if (!text) {
+      renderFindings([]);
+      return;
+    }
+
+    const findings = detectPII(text);
+
     updateHighlight(target, findings);
-  }
 
-  renderFindings(findings);
-
-  if (findings.length > 0) {
-    console.log('PII found:', findings);
-  }
+    renderFindings(findings);
+  }, 150);
 }, true);
 
 document.addEventListener('paste', (e) => {
   setTimeout(() => {
-    const target = e.target;
-    const text = target.value || target.textContent;
+    const target = document.activeElement;
+    if (!target || !target.isContentEditable) return;
+
+    const text = target.innerText;
     const findings = detectPII(text);
-    if (target.isContentEditable) updateHighlight(target, findings);
+
+    updateHighlight(target, findings);
     renderFindings(findings);
   }, 0);
 });

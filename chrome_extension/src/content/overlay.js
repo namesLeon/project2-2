@@ -27,11 +27,15 @@ function renderFindings(findings) {
   const list = document.getElementById(`${OVERLAY_ID}-list`);
   if (!list) return;
 
+  overlay.style.zIndex = '999999999';
+  overlay.style.position = 'fixed';
+
   if (!findings.length) {
     overlay.style.display = 'none';
     list.replaceChildren();
     return;
   }
+overlay.style.display = 'block';
 
   const uniqueFindings = [];
   const seen = new Set();
@@ -60,4 +64,6 @@ function renderFindings(findings) {
   });
 
   overlay.style.display = 'block';
+  overlay.style.zIndex = '999999999';
+  overlay.style.position = 'fixed';
 }

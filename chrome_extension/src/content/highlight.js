@@ -1,4 +1,3 @@
-
 function createHighlight(target) {
   let overlay = target.parentNode.querySelector('.pii-overlay');
 
@@ -12,7 +11,7 @@ function createHighlight(target) {
       'width', 'height', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
       'fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing', 'wordSpacing',
       'lineHeight', 'boxSizing', 'borderTopWidth', 'borderRightWidth', 'borderBottomWidth',
-      'borderLeftWidth', 'textAlign'
+      'borderLeftWidth', 'textAlign' , 'overflowWrap' , 'overflow','textTransform'
     ];
     propsToCopy.forEach(prop => {
       overlay.style[prop] = style[prop];
@@ -22,8 +21,26 @@ function createHighlight(target) {
     overlay.style.borderColor = 'transparent';
 
     target.parentNode.style.position = 'relative';
-    overlay.style.top = target.offsetTop + 'px';
-    overlay.style.left = target.offsetLeft + 'px';
+
+    const rect = target.getBoundingClientRect();
+    const parentRect = target.parentNode.getBoundingClientRect();
+    
+    overlay.style.top = (rect.top - parentRect.top) + 'px';
+    overlay.style.left = (rect.left - parentRect.left) + 'px';
+    overlay.style.width = rect.width + 'px';
+    overlay.style.height = rect.height + 'px';
+
+    overlay.style.whiteSpace = 'pre-wrap';
+    overlay.style.wordBreak = 'break-word';
+    overlay.style.overflowWrap = 'break-word';
+    overlay.style.position = 'absolute';
+    overlay.style.pointerEvents = 'none';
+    overlay.style.zIndex = '1';
+    overlay.style.color = 'transparent';
+
+    if (style.lineHeight === 'normal') {
+      overlay.style.lineHeight = '1.2'; 
+    }
 
     target.parentNode.appendChild(overlay);
 
@@ -38,30 +55,22 @@ function createHighlight(target) {
 
 function updateHighlight(target, findings) {
   const overlay = createHighlight(target);
-  const rawText = target.value || target.textContent;
+  const rawText = target.innerText;
+  const rect = target.getBoundingClientRect();
 
-  const sorted = [...findings].sort((a, b) => a.position - b.position);
+  let html = escapeHTML(rawText);
 
-  let htmlResult = '';
-  let lastIndex = 0;
-
-  sorted.forEach(({ value, position }) => {
-    const plainPart = rawText.slice(lastIndex, position);
-    
-    htmlResult += escapeHTML(plainPart);
-    htmlResult += `<span class="pii-highlight">${escapeHTML(value)}</span>`;
-    
-    lastIndex = position + value.length;
+  findings.forEach(({ value }) => {
+    const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(escaped, 'gi'); // <-- case insensitive
+    html = html.replace(regex, `<span class="pii-highlight">${escapeHTML(value)}</span>`);
   });
 
-  htmlResult += escapeHTML(rawText.slice(lastIndex));
+  overlay.innerHTML = html;
+  overlay.style.width = rect.width + 'px';
+  overlay.style.height = rect.height + 'px';
 
-  if (rawText.endsWith('\n')) {
-    htmlResult += '\n';
-  }
-
-  overlay.innerHTML = htmlResult;
-
+  // sync scroll ONLY
   overlay.scrollTop = target.scrollTop;
   overlay.scrollLeft = target.scrollLeft;
 }

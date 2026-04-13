@@ -30,7 +30,7 @@ group-14-cybersecurity
 
 ### Quantized Model Installation Guide - Not integrated in prototype
 1. Run `python -m venv .venv` to create local virtual environment
-2. Execute `.venv/scripts/Activate.ps1` to activate the virtual environment
+2. Execute `.venv/scripts/Activate.ps1`(`source .venv/bin/activate` for Mac) to activate the virtual environment
 3. Execute `pip install -r requirements.txt` to install all required python libraries
 
 1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root.
