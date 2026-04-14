@@ -22,13 +22,10 @@ function createHighlight(target) {
 
     target.parentNode.style.position = 'relative';
 
-    const rect = target.getBoundingClientRect();
-    const parentRect = target.parentNode.getBoundingClientRect();
-    
-    overlay.style.top = (rect.top - parentRect.top) + 'px';
-    overlay.style.left = (rect.left - parentRect.left) + 'px';
-    overlay.style.width = rect.width + 'px';
-    overlay.style.height = rect.height + 'px';
+    overlay.style.top = target.offsetTop + 'px';
+    overlay.style.left = target.offsetLeft + 'px';
+    overlay.style.width = target.offsetWidth + 'px';
+    overlay.style.height = target.offsetHeight + 'px';
 
     overlay.style.whiteSpace = 'pre-wrap';
     overlay.style.wordBreak = 'break-word';
@@ -37,10 +34,11 @@ function createHighlight(target) {
     overlay.style.pointerEvents = 'none';
     overlay.style.zIndex = '1';
     overlay.style.color = 'transparent';
+    overlay.style.font = style.font;
+    overlay.style.letterSpacing = style.letterSpacing;
+    overlay.style.lineHeight = style.lineHeight;
 
-    if (style.lineHeight === 'normal') {
-      overlay.style.lineHeight = '1.2'; 
-    }
+ 
 
     target.parentNode.appendChild(overlay);
 
@@ -52,34 +50,61 @@ function createHighlight(target) {
 
   return overlay;
 }
+function getTextAndMap(node) {
+  let text = '';
+  const map = [];
+
+  function walk(n) {
+    if (n.nodeType === Node.TEXT_NODE) {
+      for (let i = 0; i < n.textContent.length; i++) {
+        map.push({ node: n, offset: i });
+      }
+      text += n.textContent;
+    } else if (n.nodeName === 'BR') {
+      map.push({ node: n, offset: 0 });
+      text += '\n';
+    } else if (n.nodeName === 'DIV' || n.nodeName === 'P') {
+      if (text.length > 0) {
+        map.push(null);
+        text += '\n';
+      }
+      for (const child of n.childNodes) walk(child);
+    } else {
+      for (const child of n.childNodes) walk(child);
+    }
+  }
+
+  walk(node);
+  return { text, map };
+}
 
 function updateHighlight(target, findings) {
   const overlay = createHighlight(target);
-  const rawText = target.innerText;
-  const rect = target.getBoundingClientRect();
+  const { text: rawText } = getTextAndMap(target);
 
-  let html = escapeHTML(rawText);
+  const sorted = [...findings].sort((a, b) => a.position - b.position);
 
-  findings.forEach(({ value }) => {
-    const escaped = value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const regex = new RegExp(escaped, 'gi'); // <-- case insensitive
-    html = html.replace(regex, `<span class="pii-highlight">${escapeHTML(value)}</span>`);
+  let html = '';
+  let lastIndex = 0;
+
+  sorted.forEach(({ value, position }) => {
+    html += escapeHTMLWithBreaks(rawText.slice(lastIndex, position));
+    html += `<span class="pii-highlight">${escapeHTMLWithBreaks(value)}</span>`;
+    lastIndex = position + value.length;
   });
 
+  html += escapeHTMLWithBreaks(rawText.slice(lastIndex));
   overlay.innerHTML = html;
-  overlay.style.width = rect.width + 'px';
-  overlay.style.height = rect.height + 'px';
-
-  // sync scroll ONLY
   overlay.scrollTop = target.scrollTop;
   overlay.scrollLeft = target.scrollLeft;
 }
 
-function escapeHTML(str) {
+function escapeHTMLWithBreaks(str) {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+    .replace(/'/g, "&#039;")
+    .replace(/\n/g, "<br>");
 }
