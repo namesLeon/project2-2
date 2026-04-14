@@ -1,3 +1,8 @@
+/*
+Main Writer:
+Reviewer: 
+Contributors: 
+*/
 
 function createHighlight(target) {
   let overlay = target.parentNode.querySelector('.pii-overlay');
@@ -35,6 +40,11 @@ function createHighlight(target) {
 
   return overlay;
 }
+/*
+Main Writer:
+Reviewer: 
+Contributors: 
+*/
 
 function updateHighlight(target, findings) {
   const overlay = createHighlight(target);
@@ -65,6 +75,12 @@ function updateHighlight(target, findings) {
   overlay.scrollTop = target.scrollTop;
   overlay.scrollLeft = target.scrollLeft;
 }
+
+/*
+Main Writer:
+Reviewer: 
+Contributors: 
+*/
 
 function escapeHTML(str) {
   return str

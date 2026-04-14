@@ -1,3 +1,9 @@
+/*
+Main Writer:
+Reviewer: Piotr
+Contributors: 
+*/
+
 document.addEventListener('input', (e) => {
   const target = e.target;
   if (!target) return;

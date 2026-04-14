@@ -13,6 +13,11 @@ Clarifications for Developers:
 Usage: 
     Run this file by executing the following command while in repo's:
     python chrome_extension/quantize.py
+
+Main Writer:
+Reviewer: 
+Contributors: 
+
 """
 
 from pathlib import Path
