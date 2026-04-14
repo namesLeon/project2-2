@@ -1,3 +1,9 @@
+/*
+Main Writer:
+Reviewer: Piotr
+Contributors: 
+*/
+
 let textMemory = "";
 
 document.addEventListener('input', (e) => {

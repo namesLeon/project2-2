@@ -1,5 +1,11 @@
 const OVERLAY_ID = 'pii-detector-overlay';
 
+/*
+Main Writer:
+Reviewer: 
+Contributors: 
+*/
+
 function ensureOverlay() {
   let overlay = document.getElementById(OVERLAY_ID);
   if (overlay) return overlay;
@@ -21,6 +27,12 @@ function ensureOverlay() {
 
   return overlay;
 }
+
+/*
+Main Writer:
+Reviewer: 
+Contributors: 
+*/
 
 function renderFindings(findings) {
   const overlay = ensureOverlay();

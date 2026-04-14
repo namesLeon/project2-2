@@ -1,3 +1,9 @@
+/*
+Main Writer:
+Reviewer: 
+Contributors: 
+*/
+
 const piiPatterns = {
   EMAIL: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g,
   PHONE: /(\+?1[-.\s]?)?\(?[0-9]{3}\)?[-.\s]?[0-9]{3}[-.\s]?[0-9]{4}\b/g,
@@ -6,6 +12,12 @@ const piiPatterns = {
   CREDIT_CARD: /\b(?:\d[ -]*?){13,19}\b/g,
   IBAN: /\b[A-Z]{2}\d{2}[A-Z0-9]{4,30}\b/g
 };
+
+/*
+Main Writer:
+Reviewer: Piotr
+Contributors: 
+*/
 
 function detectPII(text) {
   const findings = [];
