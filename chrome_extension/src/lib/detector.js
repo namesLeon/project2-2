@@ -1,7 +1,7 @@
 /*
-Main Writer:
-Reviewer: 
-Contributors: 
+Main Writer: Andreas Constantinou
+Reviewer:
+Contributors:
 */
 
 const piiPatterns = {
@@ -10,13 +10,13 @@ const piiPatterns = {
   SSN: /\b(?!000|666)[0-9]{3}-(?!00)[0-9]{2}-(?!0000)[0-9]{4}\b/g,
   BSN: /\b\d{9}\b/g,
   CREDIT_CARD: /\b(?:\d[ -]*?){13,19}\b/g,
-  IBAN: /\b[A-Z]{2}\d{2}[A-Z0-9]{4,30}\b/g
+  IBAN: /\b[A-Z]{2}\d{2}[A-Z0-9]{4,30}\b/g,
 };
 
 /*
-Main Writer:
+Main Writer: Andreas Constantinou
 Reviewer: Piotr
-Contributors: 
+Contributors:
 */
 
 function detectPII(text) {
@@ -28,7 +28,7 @@ function detectPII(text) {
       findings.push({
         type,
         value: match[0],
-        position: match.index
+        position: match.index,
       });
     }
   }
