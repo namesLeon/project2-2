@@ -21,7 +21,7 @@ const piiPatterns = {
   IBAN: /\b(?:AD|AE|AL|AT|AZ|BA|BE|BG|BH|BR|BY|CH|CR|CY|CZ|DE|DK|DO|EE|EG|ES|FI|FO|FR|GB|GE|GI|GL|GR|GT|HR|HU|IE|IL|IQ|IS|IT|JO|KW|KZ|LB|LC|LI|LT|LU|LV|MC|MD|ME|MK|MR|MT|MU|MZ|NL|NO|PK|PL|PS|PT|QA|RO|RS|SA|SC|SE|SI|SK|SM|ST|SV|TL|TN|TR|UA|VA|VG|XK)\d{2}[A-Z0-9]{11,32}\b/g,
 
   //Vin(vehicle identification number) number(17 char) does not include I,O,Q
-  VIN: /\b[A-HJ-NPR-Z0-9]\b/g,
+  VIN: /\b[A-HJ-NPR-Z0-9]{17}\b/g,
 
   //Date of birth dd/mm/yy or dd/mm/yyyy
   DATE_OF_BIRTH: /(?<!\d)(0[1-9]|[12]\d|3[01])[\/.-](0[1-9]|1[0-2])[\/.-](?:(?:19|20)\d{2}|\d{2})(?!\d)/g,
