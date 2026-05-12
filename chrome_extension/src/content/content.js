@@ -68,3 +68,4 @@ function redactSensitiveData(inputElement, findings) {
   else
     inputElement.value = text;
 }
+
