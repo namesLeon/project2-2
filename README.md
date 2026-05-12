@@ -59,6 +59,7 @@ group-14-cybersecurity
 ![highlight_demo](docs/media/highlight_demo.png)
 5. A warning overlay should be visible on the top right. \
 ![overlay_demo](docs/media//overlay_demo.png)
+
 ## Future Work
 
 ### Horizontal Slice Goals

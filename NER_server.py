@@ -7,9 +7,6 @@ import time
 
 #To test the server, you can use the following curl command in a cmd terminal:
 #curl -X POST http://127.0.0.1:8000 -H "text: Cristiano Ronaldo was born in 1985 and plays for Al Nassr" -H "labels: Person,Date,Teams"
-
-
-
 @serve.deployment
 class GLiNERServer:
     def __init__(self):
@@ -17,11 +14,11 @@ class GLiNERServer:
         print("Loading GLiNER model...")
         self.model = GLiNER.from_pretrained("urchade/gliner_medium-v2.1")
         print("Model loaded successfully")
-    
+
     async def __call__(self, request: Request):
         """
         Handle incoming HTTP requests.
-        
+
         Expects headers:
         - 'text': The text to perform NER on
         - 'labels': Labels for entity prediction (JSON array or comma-separated)
@@ -30,13 +27,13 @@ class GLiNERServer:
             # Get text and labels from request headers
             text = request.headers.get('text')
             labels_str = request.headers.get('labels')
-            
+
             if not text or not labels_str:
                 return {
                     "error": "Missing required headers: 'text' and 'labels'",
                     "status": "failure"
                 }
-            
+
             # Parse labels
             try:
                 # Try parsing as JSON array first
@@ -46,19 +43,19 @@ class GLiNERServer:
             except json.JSONDecodeError:
                 # If not JSON, split by comma and strip whitespace
                 labels = [label.strip() for label in labels_str.split(',')]
-            
+
             # Perform entity prediction
             entities = self.model.predict_entities(text, labels, threshold=0.5)
-            
+
             # Format the response
             result = {
                 "status": "success",
                 "entities": entities,
                 "entity_count": len(entities)
             }
-            
+
             return result
-        
+
         except Exception as e:
             return {
                 "error": str(e),
