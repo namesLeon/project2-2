@@ -26,9 +26,15 @@ document.addEventListener('input', (e) => {
 
   if (findings.length > 0) {
     console.log('PII found:', findings);
-    redactSensitiveData(target, findings);
+    // redactSensitiveData(target, findings); // DO NOT REDACT UNLESS REDACT BUTTON WAS PRESSED
   }
 }, true);
+
+/*
+Main Writer: Andreas Constantinou
+Reviewer:
+Contributors:
+*/
 
 document.addEventListener('paste', (e) => {
   setTimeout(() => {
@@ -50,6 +56,12 @@ document.addEventListener('paste', (e) => {
     renderFindings(findings);
   }, 0);
 });
+
+/*
+Main Writer: Alex
+Reviewer:
+Contributors: Andreas Constantinou
+*/
 
 function redactSensitiveData(inputElement, findings) {
   let text;
