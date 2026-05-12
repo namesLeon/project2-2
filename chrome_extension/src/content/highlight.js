@@ -1,18 +1,16 @@
 /*
 Main Writer:
-Reviewer: 
-Contributors: 
+Reviewer:
+Contributors:
 */
-
 function createHighlight(target) {
   let overlay = target.parentNode.querySelector('.pii-overlay');
-
   if (!overlay) {
     overlay = document.createElement('div');
     overlay.className = 'pii-overlay';
 
     const style = getComputedStyle(target);
-    
+
     const propsToCopy = [
       'width', 'height', 'paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft',
       'fontFamily', 'fontSize', 'fontWeight', 'fontStyle', 'letterSpacing', 'wordSpacing',
@@ -44,7 +42,7 @@ function createHighlight(target) {
     overlay.style.letterSpacing = style.letterSpacing;
     overlay.style.lineHeight = style.lineHeight;
 
- 
+
 
     target.parentNode.appendChild(overlay);
 
@@ -56,6 +54,12 @@ function createHighlight(target) {
 
   return overlay;
 }
+
+/*
+Main Writer:
+Reviewer:
+Contributors:
+*/
 function getTextAndMap(node) {
   let text = '';
   const map = [];
@@ -94,18 +98,23 @@ function updateHighlight(target, findings) {
   let lastIndex = 0;
 
   sorted.forEach(({ value, position }) => {
-    html += escapeHTMLWithBreaks(rawText.slice(lastIndex, position));
-    html += `<span class="pii-highlight">${escapeHTMLWithBreaks(value)}</span>`;
+    html += escapeHTML(rawText.slice(lastIndex, position));
+    html += `<span class="pii-highlight">${escapeHTML(value)}</span>`;
     lastIndex = position + value.length;
   });
 
-  html += escapeHTMLWithBreaks(rawText.slice(lastIndex));
+  html += escapeHTML(rawText.slice(lastIndex));
   overlay.innerHTML = html;
   overlay.scrollTop = target.scrollTop;
   overlay.scrollLeft = target.scrollLeft;
 }
 
-function escapeHTMLWithBreaks(str) {
+/*
+Main Writer:
+Reviewer:
+Contributors: Ashour Kariakous, Andreas Constantinou
+*/
+function escapeHTML(str) {
   return str
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")

@@ -4,7 +4,7 @@ Reviewer: Piotr
 Contributors:
 */
 
-let textMemory = "";
+let timeout;
 
 document.addEventListener('input', (e) => {
   const target = e.target;
@@ -31,8 +31,8 @@ document.addEventListener('input', (e) => {
 }, true);
 
 /*
-Main Writer: Andreas Constantinou
-Reviewer:
+Main Writer: Ashour Kariakous
+Reviewer: Andreas Constantinou
 Contributors:
 */
 
@@ -52,32 +52,24 @@ document.addEventListener('paste', (e) => {
     if (target.isContentEditable) {
       updateHighlight(target, findings);
     }
-
-    renderFindings(findings);
-  }, 0);
-});
+  },
+    true,
+  );
+}, true);
 
 /*
-Main Writer: Alex
-Reviewer:
-Contributors: Andreas Constantinou
+Main Writer: Ashour Kariakous
+Reviewer: Andreas Constantinou
+Contributors:
 */
 
-function redactSensitiveData(inputElement, findings) {
-  let text;
-
-  if (inputElement.isContentEditable)
-    text = inputElement.textContent;
-  else
-    text = inputElement.value;
-
-  textMemory = text;
-  for (const item of findings)
-    text = text.replaceAll(item.value, "[REDACTED]");
-
-  if(inputElement.isContentEditable)
-    inputElement.textContent = text;
-  else
-    inputElement.value = text;
-}
-
+document.addEventListener('keyup', (e) => {
+  const target = e.target;
+  if (!target || !target.isContentEditable) return;
+  const { text } = getTextAndMap(target);
+  if (!text || !text.trim()) {
+    renderFindings([]);
+    const overlay = target.parentNode.querySelector('.pii-overlay');
+    if (overlay) overlay.innerHTML = '';
+  }
+}, true);
