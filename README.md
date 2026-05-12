@@ -32,7 +32,7 @@ group-14-cybersecurity
 1. Run `python -m venv .venv` to create local virtual environment
 2. Execute script activation command to activate the virtual environment
   - Windows: `.venv/scripts/Activate.ps1`
-  - Linux/MacOS: `source .venv/bin.activate` 
+  - Linux/MacOS: `source .venv/bin/activate` 
 3. Execute `pip install -r requirements.txt` to install all required python libraries
 
 1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root.
