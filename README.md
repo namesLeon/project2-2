@@ -28,19 +28,25 @@ group-14-cybersecurity
 
 ## PROTOTYPE INSTALLATION GUIDE
 
-### Quantized Model Installation Guide - Not integrated in prototype
+### Virtual environment setup
 1. Run `python -m venv .venv` to create local virtual environment
-2. Execute `.venv/scripts/Activate.ps1` to activate the virtual environment
+2. Execute script activation command to activate the virtual environment
+  - Windows: `.venv/scripts/Activate.ps1`
+  - Linux/MacOS: `source .venv/bin/activate` 
 3. Execute `pip install -r requirements.txt` to install all required python libraries
 
-1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root.
-2. The quantized models will now appear under `chrome_extension_models/`.
+### GLiNER Server setup
+Ensure virtual environment is activated and required libraries are installed.
+
+### Quantized Model Installation Guide - Not integrated in prototype - Possibly Redundant!
+
+1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root. | Possibly redundant!
+2. The quantized models will now appear under `chrome_extension_models/`. | Possibly redundant !
 
 ### Extension setup 
 1. Launch Google Chrome
 2. Click 3 dots on the top right
-3. Navigate through `Extensions` -> `Manage Extensions` 
-![navigate](docs/media/navigate_extensions.png)
+3. Visit `chrome://extensions/`
 4. Turn on developer mode and select `Load Unpacked` on the top left
 5. Navigate through `path/to/repo` and select the `chrome_extension` folder
 6. Your extension is now loaded and running
@@ -53,11 +59,17 @@ group-14-cybersecurity
     - [Perplexity](https://www.perplexity.ai/)
 2. Press `F12` to enable the Developer Tools
 3. Type any `PII` into a text-box and inspect the `console` on the top right.
+ 
 ![console](docs/media/console_snippet.png)
-4. The sensitive data is also highlighted in red. \
+
+4. The sensitive data is also highlighted in red.
+
 ![highlight_demo](docs/media/highlight_demo.png)
-5. A warning overlay should be visible on the top right. \
+
+5. A warning overlay should be visible on the top right.  
+
 ![overlay_demo](docs/media//overlay_demo.png)
+
 ## Future Work
 
 ### Horizontal Slice Goals

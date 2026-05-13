@@ -80,6 +80,7 @@ function renderFindings(findings) {
     list.replaceChildren();
     return;
   }
+overlay.style.display = 'block';
 
   const uniqueFindings = [];
   const seen = new Set();
@@ -136,4 +137,6 @@ function renderFindings(findings) {
   });
 
   overlay.style.display = 'block';
+  overlay.style.zIndex = '999999999';
+  overlay.style.position = 'fixed';
 }
