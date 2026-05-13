@@ -42,8 +42,6 @@ curl -X POST http://127.0.0.1:8000 \
     -H "Content-Type: application/json" \
     -d '{"text": "Cristiano Ronaldo was born in 1985 and plays for Al Nassr", "labels": ["Person", "Date", "Teams"]}
 ```
-- son,Date,Teams"
-MUST BE CHANGED IN THE NEAR FUTURE, text and labels should be in body no headers.
 
 ### Quantized Model Installation Guide - Not integrated in prototype - Possibly Redundant!
 

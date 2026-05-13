@@ -10,6 +10,7 @@ curl -X POST http://127.0.0.1:8000 \
     -H "Content-Type: application/json" \
     -d '{"text": "Cristiano Ronaldo was born in 1985 and plays for Al Nassr", "labels": ["Person", "Date", "Teams"]}'
 """
+@serve.deployment
 class GLiNERServer:
     def __init__(self):
         """Initialize the GLiNER model (loaded once per deployment)"""
