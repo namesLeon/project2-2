@@ -40,10 +40,10 @@ Ensure virtual environment is activated and required libraries are installed.
 ```
 curl -X POST http://127.0.0.1:8000 \
     -H "Content-Type: application/json" \
-    -d '{"text": "Cristiano Ronaldo was born in 1985 and plays for Al Nassr", "labels": ["Person", "Date", "Teams"]}
+    -d '{"text": "Cristiano Ronaldo was born in 1985 and plays for Al Nassr", "labels": ["Person", "Date", "Teams"]}'
 ```
 
-### Quantized Model Installation Guide - Not integrated in prototype - Possibly Redundant!
+### Quantized Model Installation Guide - Not integrated in prototype - Currently Redundant!
 
 1. Run quantization script with `python chrome_extension/quantize.py` while in repo's root. | Possibly redundant!
 2. The quantized models will now appear under `chrome_extension_models/`. | Possibly redundant !
