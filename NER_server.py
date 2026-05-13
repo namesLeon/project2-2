@@ -1,13 +1,15 @@
 from gliner import GLiNER
 from ray import serve
 from starlette.requests import Request
-import json
 import time
 
 
 #To test the server, you can use the following curl command in a cmd terminal:
-#curl -X POST http://127.0.0.1:8000 -H "text: Cristiano Ronaldo was born in 1985 and plays for Al Nassr" -H "labels: Person,Date,Teams"
-@serve.deployment
+"""
+curl -X POST http://127.0.0.1:8000 \
+    -H "Content-Type: application/json" \
+    -d '{"text": "Cristiano Ronaldo was born in 1985 and plays for Al Nassr", "labels": ["Person", "Date", "Teams"]}'
+"""
 class GLiNERServer:
     def __init__(self):
         """Initialize the GLiNER model (loaded once per deployment)"""
@@ -24,25 +26,26 @@ class GLiNERServer:
         - 'labels': Labels for entity prediction (JSON array or comma-separated)
         """
         try:
-            # Get text and labels from request headers
-            text = request.headers.get('text')
-            labels_str = request.headers.get('labels')
+            # Get text and labels request's body
+            body = await request.json()
+
+            text = body.get('text')
+            labels_str = body.get('labels')
 
             if not text or not labels_str:
                 return {
-                    "error": "Missing required headers: 'text' and 'labels'",
+                    "error": "Missing fields in JSON body: 'text' and 'labels'",
                     "status": "failure"
                 }
 
             # Parse labels
-            try:
-                # Try parsing as JSON array first
-                labels = json.loads(labels_str)
-                if not isinstance(labels, list):
-                    labels = [labels]
-            except json.JSONDecodeError:
-                # If not JSON, split by comma and strip whitespace
+            if isinstance(labels_str, list):
+                labels = labels_str
+            elif isinstance(labels_str, str):
+                # If string, split by comma and strip whitespace
                 labels = [label.strip() for label in labels_str.split(',')]
+            else:
+                labels = [str(labels_str)]
 
             # Perform entity prediction
             entities = self.model.predict_entities(text, labels, threshold=0.5)
