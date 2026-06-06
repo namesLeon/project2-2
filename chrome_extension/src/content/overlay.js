@@ -1,5 +1,6 @@
 const OVERLAY_ID = 'pii-detector-overlay';
 
+
 /*
 Main Writer:
 Reviewer:
@@ -7,6 +8,18 @@ Contributors:
 */
 
 const IGNORE_STORAGE_KEY = 'pii-ignore-temp-list';
+
+const replacements = {
+  EMAIL: 'example@examplecompany.com',
+  PHONE: '+1 (123) 456-7890',
+  SSN: '123-45-6789',
+  BSN: '123456789',
+  CREDIT_CARD: '1234 5678 9012 3456',
+  IBAN: 'AD12345678901234567890123456',
+  VIN: '1HGBH41JXMN109186',
+  DATE_OF_BIRTH: '01/01/1990',
+  MAC_ADDRESS: '00:1A:2B:3C:4D:5E'
+};
 
 function getIgnoredPII() {
   const data = sessionStorage.getItem(IGNORE_STORAGE_KEY);
@@ -59,10 +72,8 @@ function ensureOverlay() {
   });
 
   overlay.appendChild(closeBtn);
-
   overlay.appendChild(title);
   overlay.appendChild(list);
-
   document.documentElement.appendChild(overlay);
 
   return overlay;
@@ -120,10 +131,36 @@ overlay.style.display = 'block';
     const redactBtn = document.createElement('button');
     redactBtn.textContent = 'Redact';
     redactBtn.className = 'redact';
+    
+    redactBtn.addEventListener('click', () => {
+      const activeEl = window._lastPIITarget;
+      if (!activeEl) return;
+      if (activeEl.isContentEditable) {
+        activeEl.textContent = activeEl.textContent.replaceAll(item.value, '[REDACTED]');
+      } else {
+        activeEl.value = activeEl.value.replaceAll(item.value, '[REDACTED]');
+      }
+      addIgnoredPII(item);
+      activeEl.dispatchEvent(new Event('input', { bubbles: true })); 
+    });
 
     const replaceBtn = document.createElement('button');
     replaceBtn.textContent = 'Replace';
     replaceBtn.className = 'replace';
+
+    replaceBtn.addEventListener('click', () => {
+      const activeEl = window._lastPIITarget;
+      if (!activeEl) return;
+      const placeholder = replacements[item.type] || '[REDACTED]';
+      if (activeEl.isContentEditable) {
+        activeEl.textContent = activeEl.textContent.replaceAll(item.value, placeholder);
+      } else {
+        activeEl.value = activeEl.value.replaceAll(item.value, placeholder);
+      }
+      addIgnoredPII(item);
+      activeEl.dispatchEvent(new Event('input', { bubbles: true })); 
+    });
+
 
     buttonContainer.appendChild(ignoreBtn);
     buttonContainer.appendChild(redactBtn);

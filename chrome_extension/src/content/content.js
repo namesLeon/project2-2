@@ -1,10 +1,17 @@
 /*
-Main Writer: Andreas Constantinou
+Main Writer: Andreas Constantinou, 
 Reviewer: Piotr
-Contributors:
+Contributors: Ashour Kariakous
 */
 
 let timeout;
+
+document.addEventListener('focusin', (e) => {
+  const t = e.target;
+  if (t && (t.isContentEditable || t.tagName === 'TEXTAREA' || t.tagName === 'INPUT')) {
+    window._lastPIITarget = t;
+  }
+}, true);
 
 document.addEventListener('input', (e) => {
   const target = e.target;
