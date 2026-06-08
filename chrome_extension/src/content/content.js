@@ -1,7 +1,7 @@
 /*
-Main Writer: Andreas Constantinou, 
+Main Writer: Andreas Constantinou
 Reviewer: Piotr
-Contributors: Ashour Kariakous
+Contributors: Ashour Kariakous, Alexandru Mihaila
 */
 
 let timeout;
