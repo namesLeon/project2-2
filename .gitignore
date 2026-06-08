@@ -1,5 +1,6 @@
 *.log
 *.DS_Store
+**/node_modules/*
 
 # Environments
 .env
@@ -23,3 +24,4 @@ venv/
 
 # large media
 *.mov
+
