@@ -23,19 +23,45 @@ document.addEventListener('input', (e) => {
     return;
   }
 
-  const findings = detectPII(text);
+  clearTimeout(timeout);
 
-  if (target.isContentEditable) {
-    updateHighlight(target, findings);
-  }
+  timeout = setTimeout(() => {
+    const findings = detectPII(text);
 
-  renderFindings(findings);
+    if (target.isContentEditable) {
+      updateHighlight(target, findings);
+    }
 
-  if (findings.length > 0) {
-    console.log('PII found:', findings);
-    // redactSensitiveData(target, findings); // DO NOT REDACT UNLESS REDACT BUTTON WAS PRESSED
-  }
+    renderFindings(findings);
+
+    if (findings.length > 0) {
+      console.log('PII found:', findings);
+      // redactSensitiveData(target, findings); // DO NOT REDACT UNLESS REDACT BUTTON WAS PRESSED
+    }
+  }, 300);
 }, true);
+
+
+document.addEventListener('paste', (e) => {
+  const target = e.target;
+  if (!target)
+    return;
+
+  clearTimeout(timeout);
+
+  timeout = setTimeout(()=> {
+    const text = target.value || target.textContent;
+    if (!text)
+      return;
+
+    const findings = detectPII(text);
+    if(target.isContentEditable())
+      updateHighlight(target, findings);
+
+    renderFindings(findings);
+  }, 300);
+}, true);
+
 
 /*
 Main Writer: Ashour Kariakous
