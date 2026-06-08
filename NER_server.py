@@ -3,6 +3,9 @@ from ray import serve
 from starlette.requests import Request
 import time
 
+#Main Writer: Leonard
+#Reviewer: 
+#Contributors:
 
 #To test the server, you can use the following curl command in a cmd terminal:
 """

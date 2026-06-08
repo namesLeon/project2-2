@@ -6,6 +6,10 @@ import numpy as np
 from gliner.evaluation import BaseNEREvaluator
 from torch.utils.data import DataLoader
 
+#Main Writer: Anatolie
+#Reviewer: 
+#Contributors: Leonard
+
 # Set environment variables early so torch/MPS picks them up before imports
 os.environ["PYTORCH_MPS_HIGH_WATERMARK_RATIO"] = "0.0"
 
