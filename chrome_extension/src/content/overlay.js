@@ -4,7 +4,7 @@ const OVERLAY_ID = 'pii-detector-overlay';
 /*
 Main Writer:
 Reviewer:
-Contributors:
+Contributors: Ashour Kariakous
 */
 
 const IGNORE_STORAGE_KEY = 'pii-ignore-temp-list';
@@ -127,6 +127,13 @@ overlay.style.display = 'block';
       addIgnoredPII(item);
       renderFindings(findings);
     });
+
+/*
+Main Writer: Ashour Kariakous
+Reviewer:
+Contributors: 
+*/
+
 
     const redactBtn = document.createElement('button');
     redactBtn.textContent = 'Redact';

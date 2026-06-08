@@ -1,7 +1,7 @@
 /*
 Main Writer:
 Reviewer:
-Contributors:
+Contributors: Ashour Kariakous
 */
 function createHighlight(target) {
   let overlay = target.parentNode.querySelector('.pii-overlay');
@@ -56,7 +56,7 @@ function createHighlight(target) {
 }
 
 /*
-Main Writer:
+Main Writer: Ashour Kariakous
 Reviewer:
 Contributors:
 */
