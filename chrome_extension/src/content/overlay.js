@@ -4,7 +4,7 @@ const OVERLAY_ID = 'pii-detector-overlay';
 /*
 Main Writer:
 Reviewer:
-Contributors: Ashour Kariakous, Leonard
+Contributors: Ashour Kariakous, Leonard, Jianu Mihnea-Alexandru
 */
 
 const IGNORE_STORAGE_KEY = 'pii-ignore-temp-list';
