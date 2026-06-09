@@ -22,7 +22,7 @@ USE ENVIRONMENT VARIABLES
 DO NOT HARDCORE YOUR API KEY.
 """
 DEEPSEEK_BASE_URL = "https://api.deepseek.com/v1"
-MODEL = "deepseek-chat"
+MODEL = "deepseek-v4-flash"
 TEMPERATURE = 0.0
 SLEEP_SEC = 1.0
 
@@ -30,7 +30,7 @@ OUT_DIR = Path(__file__).resolve().parent / "data"
 OUT_DIR.mkdir(exist_ok=True)
 
 def load_data():
-    df = pd.read_csv(OUT_DIR / "prompts.csv")
+    df = pd.read_csv(OUT_DIR / "prompts.csv", dtype={"prompt_id": str})
     with open(OUT_DIR / "pii_map.json") as f:
         pii_map = json.load(f)
     return df, pii_map
@@ -39,7 +39,7 @@ def load_data():
 def apply_replacements(text: str, pii_entry: dict, mode: str) -> str:
     """
     Replace PII values in `text` with their redacted or replacement forms.
-    `mode`: "redacted" or "replaced"
+    `mode`: "redacted" or "replacement"
     """
     result = text
     for pii_type, variants in pii_entry.items():
@@ -88,7 +88,7 @@ def main():
         pii_entry = pii_map.get(pid, {})
 
         redacted_prompt = apply_replacements(original, pii_entry, "redacted")
-        replaced_prompt = apply_replacements(original, pii_entry, "replaced")
+        replaced_prompt = apply_replacements(original, pii_entry, "replacement")
 
         original_response = query_deepseek(client, original)
         time.sleep(SLEEP_SEC)
