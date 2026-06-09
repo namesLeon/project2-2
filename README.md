@@ -42,6 +42,10 @@ curl -X POST http://127.0.0.1:8000 \
     -H "Content-Type: application/json" \
     -d '{"text": "Cristiano Ronaldo was born in 1985 and plays for Al Nassr", "labels": ["Person", "Date", "Teams"]}'
 ```
+### Accesing fine tuned model
+Due to the that the model size is too big , the following google drive link gives access to the checkpoint of the model:
+link: https://drive.google.com/drive/folders/1Qg3sUyRwqMGFAQYz1vP6WFpAkGiimmcu?usp=sharing
+
 
 ### Quantized Model Installation Guide - Not integrated in prototype - Currently Redundant!
 
