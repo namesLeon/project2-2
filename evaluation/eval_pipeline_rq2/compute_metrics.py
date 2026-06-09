@@ -3,96 +3,138 @@ Main Writer:Jianu Mihnea-Alexandru
 Reviewer: 
 Contributors:
 '''
-
-
+from pathlib import Path
+import json
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from bert_score import score
 
+JSON_PATH = Path("evaluation\\eval_pipeline_rq2\\data\\responses.json")
+
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
-cos_sim_avg = 0
-P_avg = 0
-R_avg = 0
-F1_avg = 0
 
-cos_sim_min = 1
-cos_sim_max = 0
-P_min = 1
-P_max = 0
-R_min = 1
-R_max = 0
-F1_min = 1
-F1_max = 0
+def make_stats():
+    return {
+        "count": 0,
+        "cos_sum": 0.0,
+        "p_sum": 0.0,
+        "r_sum": 0.0,
+        "f1_sum": 0.0,
+        "cos_min": float("inf"),
+        "cos_max": float("-inf"),
+        "p_min": float("inf"),
+        "p_max": float("-inf"),
+        "r_min": float("inf"),
+        "r_max": float("-inf"),
+        "f1_min": float("inf"),
+        "f1_max": float("-inf"),
+    }
 
-with open("answers_prompts.txt", "r", encoding="utf-8") as f:
-    answers = [line.strip() for line in f if line.strip()]
 
-if len(answers) % 2 != 0:
-    raise ValueError(
-        f"File contains {len(answers)} non-empty lines. "
-        "Expected an even number of lines."
-    )
+def update_stats(stats, cos_sim, p, r, f1):
+    stats["count"] += 1
+    stats["cos_sum"] += cos_sim
+    stats["p_sum"] += p
+    stats["r_sum"] += r
+    stats["f1_sum"] += f1
 
-for i in range(0, len(answers), 2):
-    answer_a = answers[i]
-    answer_b = answers[i + 1]
+    stats["cos_min"] = min(stats["cos_min"], cos_sim)
+    stats["cos_max"] = max(stats["cos_max"], cos_sim)
 
-    embeddings = model.encode([answer_a, answer_b])
+    stats["p_min"] = min(stats["p_min"], p)
+    stats["p_max"] = max(stats["p_max"], p)
 
-    cos_sim = cosine_similarity(
-        [embeddings[0]],
-        [embeddings[1]]
-    )[0][0]
+    stats["r_min"] = min(stats["r_min"], r)
+    stats["r_max"] = max(stats["r_max"], r)
+
+    stats["f1_min"] = min(stats["f1_min"], f1)
+    stats["f1_max"] = max(stats["f1_max"], f1)
+
+
+def evaluate_pair(text1, text2):
+    """
+    Compare text1 vs text2 using cosine similarity and BERTScore.
+    text1 is treated as the candidate and text2 as the reference.
+    """
+    embeddings = model.encode([text1, text2])
+
+    cos_sim = cosine_similarity([embeddings[0]], [embeddings[1]])[0][0]
 
     P, R, F1 = score(
-        [answer_b],
-        [answer_a],
+        [text1],
+        [text2],
         lang="en",
         rescale_with_baseline=True
     )
-    if(cos_sim < cos_sim_min):
-        cos_sim_min = cos_sim
-    if(cos_sim > cos_sim_max):
-        cos_sim_max = cos_sim
-    if(P.item() < P_min):
-        P_min = P.item()
-    if(P.item() > P_max):
-        P_max = P.item()
-    if(R.item() < R_min):
-        R_min = R.item()
-    if(R.item() > R_max):
-        R_max = R.item()
-    if(F1.item() < F1_min):
-        F1_min = F1.item()
-    if(F1.item() > F1_max):
-        F1_max = F1.item()
-    
-    print(f"\nPair {(i // 2) + 1}")
-    print(f"Line {i + 1} vs Line {i + 2}")
-    print("Cosine similarity:", cos_sim)
-    print("Precision:", P.item())
-    print("Recall:", R.item())
-    print("F1:", F1.item())
-    cos_sim_avg += cos_sim
-    P_avg += P.item()
-    R_avg += R.item()
-    F1_avg += F1.item()
-print(" ")
-print(" ")
-print("COSINE MIN:", cos_sim_min)
-print("COSINE MAX:", cos_sim_max)
-print("PRECISION MIN:", P_min)
-print("PRECISION MAX:", P_max)
-print("RECALL MIN:", R_min)
-print("RECALL MAX:", R_max)
-print("F1 MIN:", F1_min)
-print("F1 MAX:", F1_max)
-print(" ")
-print(" ")
-print("COSINE AVERAGE:", cos_sim_avg / (len(answers) // 2))
-print("PRECISION AVERAGE:", P_avg / (len(answers) // 2))
-print("RECALL AVERAGE:", R_avg / (len(answers) // 2))
-print("F1 AVERAGE:", F1_avg / (len(answers) // 2))
 
-#min si max 
+    return cos_sim, P.item(), R.item(), F1.item()
+
+
+def print_summary(title, stats):
+    n = stats["count"]
+    if n == 0:
+        print(f"\n{title}")
+        print("No valid records found.")
+        return
+
+    print(f"\n{title}")
+    print("-" * len(title))
+    print("COSINE MIN:", stats["cos_min"])
+    print("COSINE MAX:", stats["cos_max"])
+    print("PRECISION MIN:", stats["p_min"])
+    print("PRECISION MAX:", stats["p_max"])
+    print("RECALL MIN:", stats["r_min"])
+    print("RECALL MAX:", stats["r_max"])
+    print("F1 MIN:", stats["f1_min"])
+    print("F1 MAX:", stats["f1_max"])
+    print()
+    print("COSINE AVERAGE:", stats["cos_sum"] / n)
+    print("PRECISION AVERAGE:", stats["p_sum"] / n)
+    print("RECALL AVERAGE:", stats["r_sum"] / n)
+    print("F1 AVERAGE:", stats["f1_sum"] / n)
+
+
+with open(JSON_PATH, "r", encoding="utf-8") as f:
+    data = json.load(f)
+
+if not isinstance(data, dict):
+    raise ValueError("JSON file must contain a dictionary of records.")
+
+stats_original_redacted = make_stats()
+stats_original_replaced = make_stats()
+
+for record_id, record in sorted(data.items()):
+    original_response = record.get("original_response", "").strip()
+    redacted_response = record.get("redacted_response", "").strip()
+    replaced_response = record.get("replaced_response", "").strip()
+
+    if not original_response or not redacted_response or not replaced_response:
+        print(f"Skipping {record_id}: missing one or more response fields.")
+        continue
+
+    # original vs redacted
+    cos_sim, p, r, f1 = evaluate_pair(original_response, redacted_response)
+    update_stats(stats_original_redacted, cos_sim, p, r, f1)
+
+    print(f"\nRecord {record_id} | original vs redacted")
+    print("Cosine similarity:", cos_sim)
+    print("Precision:", p)
+    print("Recall:", r)
+    print("F1:", f1)
+
+    # original vs replaced
+    cos_sim, p, r, f1 = evaluate_pair(original_response, replaced_response)
+    update_stats(stats_original_replaced, cos_sim, p, r, f1)
+
+    print(f"\nRecord {record_id} | original vs replaced")
+    print("Cosine similarity:", cos_sim)
+    print("Precision:", p)
+    print("Recall:", r)
+    print("F1:", f1)
+
+print("\n\nFINAL RESULTS")
+print("=" * 40)
+
+print_summary("Original vs Redacted", stats_original_redacted)
+print_summary("Original vs Replaced", stats_original_replaced)

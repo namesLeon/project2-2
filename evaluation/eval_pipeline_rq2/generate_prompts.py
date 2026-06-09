@@ -23,7 +23,6 @@ PII_TYPES = [
 
 PROMPTS_PER_DOMAIN = 100
 
-
 def luhn_checksum(n: str) -> int:
     def digits_of(n):
         return [int(d) for d in str(n)]
