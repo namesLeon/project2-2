@@ -19,11 +19,7 @@ group-14-cybersecurity
 ├── scripts/
 │   ├── eval_preservation/     # PII preservation evaluation scripts
 │   └── fine_tuning/           # GLiNER fine-tuning script
-├── docs/
-│   ├── flowcharts/            # System and user interaction flowcharts
-│   ├── media/                 # Screenshots and demo assets
-│   └── ui/                    # UI mockups
-├── NER_server.py              # GLiNER NER model server (Ray Serve)
+│   └──NER_server.py              # GLiNER NER model server (Ray Serve)
 ├── requirements.txt           # Python dependencies
 └── LICENSE                    # GPL Open Source License
 ```
@@ -32,22 +28,8 @@ group-14-cybersecurity
 
 1. Create and activate a virtual environment:
 
-<<<<<<< HEAD
-### GLiNER Server setup
-Ensure virtual environment is activated and required libraries are installed.
-```
-curl -X POST http://127.0.0.1:8000 \
-    -H "Content-Type: application/json" \
-    -d '{"text": "Cristiano Ronaldo was born in 1985 and plays for Al Nassr", "labels": ["Person", "Date", "Teams"]}'
-```
-### Accesing fine tuned model
-Due to the that the model size is too big , the following google drive link gives access to the checkpoint of the model:
-link: https://drive.google.com/drive/folders/1Qg3sUyRwqMGFAQYz1vP6WFpAkGiimmcu?usp=sharing
-
-=======
    - **Linux/macOS**: `python -m venv .venv && source .venv/bin/activate`
    - **Windows**: `python -m venv .venv` then `.venv\Scripts\Activate.ps1`
->>>>>>> de76fcd (Finalized README.md documentation)
 
 2. Install dependencies:
 
