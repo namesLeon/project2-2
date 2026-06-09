@@ -7,7 +7,7 @@ from gliner.evaluation import BaseNEREvaluator
 from torch.utils.data import DataLoader
 
 #Main Writer: Anatolie
-#Reviewer: 
+#Reviewer:
 #Contributors: Leonard
 
 # Set environment variables early so torch/MPS picks them up before imports
