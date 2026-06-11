@@ -1,11 +1,9 @@
-'''
-Main Writer: Jianu Mihnea-Alexandru
-Reviewer:
-Contributors:
-'''
 import matplotlib.pyplot as plt
 import numpy as np
 
+# -----------------------------
+# DATA
+# -----------------------------
 metrics_bert = ["Precision", "Recall", "F1"]
 
 redacted_bert = np.array([
@@ -31,6 +29,9 @@ cosine_values = np.array([
 color_redacted = "#1f77b4"  # blue
 color_replaced = "#ff7f0e"  # orange
 
+# -----------------------------
+# 1. COSINE SIMILARITY (VERTICAL)
+# -----------------------------
 plt.figure(figsize=(6, 4))
 
 plt.bar(
@@ -47,6 +48,9 @@ plt.ylim(0, 100)
 plt.tight_layout()
 plt.show()
 
+# -----------------------------
+# 2. BERTSCORE (PRECISION / RECALL / F1)
+# -----------------------------
 x = np.arange(len(metrics_bert))
 width = 0.35
 

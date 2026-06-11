@@ -2,12 +2,6 @@
 generate_reponses.py - Generate 400 synthetic prompts across 4 domains with embedded PII.
 Output: prompts.csv, pii_map.json
 """
-'''
-LLMs have been used for the generation of synthetic prompts and templates
-Main Writer: Andreas Constantinou
-Reviewer:
-Contributors:
-'''
 
 import json
 import os
@@ -23,7 +17,6 @@ from tqdm import tqdm
 load_dotenv()
 
 """
-NOTE FOR ANYONE WORKING ON THIS REPOSITORY
 DO NOT HARDCODE YOUR API KEY.
 USE ENVIRONMENT VARIABLES
 DO NOT HARDCORE YOUR API KEY.

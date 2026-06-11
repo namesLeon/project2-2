@@ -9,7 +9,6 @@
 │  │  └─ overlay.js
 │  ├─ lib
 │  │  └─ detector.js
-│  │  └─ redactor.js
 │  ├─ manifest.json
 │  ├─ quantize.py
 │  ├─ README.md
@@ -30,6 +29,14 @@
 
 ### Browser Extension
 We chose to implement our endpoint DLP idea using a browser extension, as it is easy for a user to install and integrate our system into their usual workflow. It allows us to use reasonable computational resources to detect sensitive information without needing heavy applications running in the background. Also, `manifest.json` allows us to limit our extension's execution to specified LLM websites, which helps with privacy concerns.
+
+### Datasets
+To fine-tune our models we will use information from public NER datasets and PII specific datasets such as:
+- https://huggingface.co/datasets/ai4privacy/pii-masking-200k
+- https://www.protecto.ai/download-personal-data-for-testing/
+
+### Quantization 
+We successfully use **Huggingface**'s optimum library to download, quantize an NER model and convert it to ONNX runtime compliant format (ORT). Quantizing slightly decreases accuracy by using smaller data types to represent weights in the models but also signficiantly reduces the model's size which is crucial in our goal to include it in a browser extension.
 
 ### NER models
 We chose Named Entity Recognition (NER) models to assist regex in a hybrid detection system, due to NER's ability to identify and classify data (entities) in unstructured text and categorize them into predifined categories such as people, organization etc.
