@@ -74,19 +74,19 @@ if __name__ == "__main__":
     # Start Ray Serve with HTTP options and deploy the GLiNERServer.
     # Different Ray Serve versions expose different deployment APIs, so
     # try the modern `deploy()` first and fall back to bind+serve.run().
-    serve.start(http_options={"host": "0.0.0.0", "port": 8000})
+    serve.start(http_options={"host": "127.0.0.1", "port": 8000})
     deployed = False
     try:
         GLiNERServer.deploy()
         deployed = True
-        print("GLiNERServer deployed via GLiNERServer.deploy() on http://0.0.0.0:8000")
+        print("GLiNERServer deployed via GLiNERServer.deploy() on http://127.0.0.1:8000")
     except AttributeError:
         # Older/newer Ray versions may require binding and running the deployment
         try:
             application = GLiNERServer.bind()
             serve.run(application)
             deployed = True
-            print("GLiNERServer deployed via bind+serve.run() on http://0.0.0.0:8000")
+            print("GLiNERServer deployed via bind+serve.run() on http://127.0.0.1:8000")
         except TypeError as e:
             print("Failed to deploy via bind+serve.run():", e)
             print("Please check your Ray Serve version. You can still run this as a standalone ASGI app if needed.")
