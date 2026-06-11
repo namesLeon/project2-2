@@ -1,6 +1,6 @@
 '''
 Main Writer:Jianu Mihnea-Alexandru
-Reviewer: 
+Reviewer:
 Contributors:
 '''
 from pathlib import Path
@@ -9,7 +9,7 @@ from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
 from bert_score import score
 
-JSON_PATH = Path("evaluation\\eval_pipeline_rq2\\data\\responses.json")
+JSON_PATH = Path("data/responses.json")
 
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
@@ -65,7 +65,7 @@ def evaluate_pair(text1, text2):
         [text1],
         [text2],
         lang="en",
-        rescale_with_baseline=True
+        rescale_with_baseline=False
     )
 
     return cos_sim, P.item(), R.item(), F1.item()
